@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View,  TouchableOpacity,Button } from 'react-native';
 import logo from './assets/snapchat.png';
 import * as ImagePicker from 'expo-image-picker';
+import Login from './Screens/Login';
 
 
 
@@ -30,6 +31,7 @@ export default function App() {
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
         <Text style={styles.buttonText}>Choisir une photo</Text>
       </TouchableOpacity>
+      <Login />
     </View>
   );
 }
