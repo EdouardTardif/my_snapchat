@@ -11,6 +11,7 @@ import LoginScreen from './LoginScreen';
 import PhotoScreen from './PhotoScreen';
 import SnapsScreen from './SnapsScreen';
 import RegisterScreen from './RegisterScreen';
+import LogoutScreen from './LogoutScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,16 +29,6 @@ function MainTabScreen() {
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          tabBarLabel: 'Login',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
           ),
         }}
       />
@@ -61,7 +52,16 @@ function MainTabScreen() {
         ),
         }}
     />
-    <Tab.Screen name="Register" component={RegisterScreen} />
+    <Tab.Screen
+      name="Logout"
+      component={LogoutScreen}
+      options={{
+        tabBarLabel: 'Logout',
+        tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="logout" color={color} size={26} />
+        ),
+      }}
+        />
     </Tab.Navigator>
   );
 }

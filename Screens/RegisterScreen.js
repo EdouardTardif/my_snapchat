@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text,TextInput, View,  TouchableOpacity,Button } from 'react-native';
 import logo from '../assets/snapchat.png';
 import * as ImagePicker from 'expo-image-picker';
-
+import axios from 'axios';
 
 
 class RegisterScreen extends React.Component{
@@ -13,11 +13,13 @@ class RegisterScreen extends React.Component{
         this.state = {
             email : null,
             password : null,
+            error : null,
+            
         }
     }
     
 
-    inscription = async () => {
+    inscription = () => {
         console.log(this.state);
         if(this.state.email !== null && this.state.password !== null){
             let email = this.state.email;
@@ -27,19 +29,23 @@ class RegisterScreen extends React.Component{
                 password,
             }
             console.log("body :",body);
-            // fetch('http://snapi.epitech.eu/inscription', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body
-            // })
-            // .then((response) => {
-            //     console.log(response);
-            // })
-            // .catch((error) => {
-            //     console.log(error);
-            // })
+
+
+
+            axios.post('http://snapi.epitech.eu/inscription', body).then(response => {
+                    console.log(response)
+                    if(response.status == 200){
+                        this.props.navigation.navigate('Login');
+                    } else {
+                        console.log(response);
+                        this.setState({ error : response.data});
+                    }
+                }).catch(error => {
+                    console.log(error.response.data.data.email[0]);
+                    this.setState({ error : 'email '+error.response.data.data.email[0]});
+                })
+        } else {
+            this.setState({ error : 'Veuillez remplir tout les champs'});
         }
     }
 
@@ -68,21 +74,28 @@ class RegisterScreen extends React.Component{
                   textContentType="password"
                   value={this.state.password}
                   autoCompleteType="password"
-
                 />
+                <TextInput style={styles.error}>{this.state.error ? this.state.error : null}</TextInput>
                 <TouchableOpacity style={styles.buttonLogin} onPress={this.inscription}>
                   <Text style={styles.buttonText}>S'Inscrire</Text>
                 </TouchableOpacity>
                 <Button title="Go back" onPress={() => this.props.navigation.goBack()} />
-                <Text>{this.state.email ? this.state.email : null}</Text>
-                <Text>{this.state.password ? this.state.password : null}</Text>
 
             </View>
       );
     }
 }
 
-
+const options = {
+    password : {
+        fields: {
+            password: {
+                password: true,
+                secureTextEntry: true
+            }
+        }
+    }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -114,6 +127,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
+  error : {
+    fontSize: 17,
+    color: 'rgb(255, 0, 0)',
+  }
 });
 
 

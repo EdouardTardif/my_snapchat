@@ -20,8 +20,23 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-
+  let token = null;
   let isloggedin = false;
+  let getItems = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key')
+      if(value !== null) {
+        console.log('token ici -->'+value);
+        token = value;
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+  if(token !== null){
+    isloggedin = true;
+  }
 
   return (
     <NavigationContainer>
@@ -36,7 +51,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
 const styles = StyleSheet.create({
   container : {
     flex : 1,
