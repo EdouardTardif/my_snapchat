@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons'
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import MainTabScreen from './Screens/MainTabScreen';
 import LoginScreen from './Screens/LoginScreen';
@@ -24,18 +25,16 @@ export default function App() {
   let isloggedin = false;
   let getItems = async () => {
     try {
-      const value = await AsyncStorage.getItem('@storage_Key')
+      const value = await AsyncStorage.getItem('@storage_Key');
+      console.log('token ici -->'+value);
       if(value !== null) {
         console.log('token ici -->'+value);
         token = value;
+        isloggedin = true;
       }
     } catch(e) {
       // error reading value
     }
-  }
-
-  if(token !== null){
-    isloggedin = true;
   }
 
   return (

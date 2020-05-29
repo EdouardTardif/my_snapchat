@@ -40,7 +40,7 @@ class LoginScreen extends React.Component{
                         this.setState({ token : response.data.data.token});
                         this.setState({ email : response.data.data.email});
                         this.storeData(response.data.data.token);
-                        
+                        this.props.navigation.navigate('Home')
                       } else {
                         console.log(response);
                         this.setState({ error : response.data});
