@@ -15,6 +15,7 @@ import LogoutScreen from './LogoutScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
+
 function MainTabScreen() {
   return (
     <Tab.Navigator

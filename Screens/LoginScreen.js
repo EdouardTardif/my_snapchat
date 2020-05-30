@@ -40,7 +40,9 @@ class LoginScreen extends React.Component{
                         this.setState({ token : response.data.data.token});
                         this.setState({ email : response.data.data.email});
                         this.storeData(response.data.data.token);
-                        this.props.navigation.navigate('Home')
+                        this.storeEmail(response.data.data.email);
+                        // window.location.reload(false);
+                        this.props.navigation.navigate('App');
                       } else {
                         console.log(response);
                         this.setState({ error : response.data});
@@ -57,6 +59,13 @@ class LoginScreen extends React.Component{
     storeData = async (value) => {
       try {
         await AsyncStorage.setItem('@storage_Key', value)
+      } catch (e) {
+        // saving error
+      }
+    }
+    storeEmail = async (value) => {
+      try {
+        await AsyncStorage.setItem('@storage_Email', value)
       } catch (e) {
         // saving error
       }
